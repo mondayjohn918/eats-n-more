@@ -37,9 +37,8 @@
   if (!reduce) document.querySelectorAll(".frame-bleed").forEach(el => drift.observe(el));
 
   // Grill video: only fetched when its frame is near, skipped on Save-Data and reduced motion
-  const video = document.querySelector(".fb-video");
   const saveData = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ""));
-  if (video && !reduce && !saveData) {
+  if (!reduce && !saveData) document.querySelectorAll(".fb-video").forEach(video => {
     const vio = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -54,26 +53,30 @@
       });
     }, { rootMargin: "200px 0px" });
     vio.observe(video.closest(".frame-bleed"));
-  }
+  });
 
-  // Kitchen: the row nearest the middle of the screen (or the one pointed at) is active
-  const dishes = [...document.querySelectorAll(".dish")];
-  const pics = [...document.querySelectorAll(".k-photo img")];
-  let current = 0;
-  const activate = i => {
-    if (i === current) return;
-    current = i;
-    dishes.forEach((d, j) => {
-      d.classList.toggle("is-on", j === i);
-      d.querySelector("button").setAttribute("aria-expanded", j === i);
+  // Kitchen lists (one per menu section): the row nearest the middle of the screen, or the one pointed at, is active
+  const lists = [...document.querySelectorAll(".kitchen")].map(section => {
+    const dishes = [...section.querySelectorAll(".dish")];
+    const pics = [...section.querySelectorAll(".k-photo img")];
+    const list = section.querySelector(".dishes");
+    let current = 0;
+    const activate = i => {
+      if (i === current) return;
+      current = i;
+      dishes.forEach((d, j) => {
+        d.classList.toggle("is-on", j === i);
+        d.querySelector("button").setAttribute("aria-expanded", j === i);
+      });
+      pics.forEach(p => p.classList.toggle("is-on", +p.dataset.k === +dishes[i].dataset.k));
+    };
+    dishes.forEach((d, i) => {
+      const b = d.querySelector("button");
+      b.addEventListener("click", () => activate(i));
+      b.addEventListener("focus", () => activate(i));
+      b.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") activate(i); });
     });
-    pics.forEach(p => p.classList.toggle("is-on", +p.dataset.k === +dishes[i].dataset.k));
-  };
-  dishes.forEach((d, i) => {
-    const b = d.querySelector("button");
-    b.addEventListener("click", () => activate(i));
-    b.addEventListener("focus", () => activate(i));
-    b.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") activate(i); });
+    return { dishes, list, activate };
   });
   let ticking = false;
   const onScroll = () => {
@@ -81,21 +84,21 @@
     ticking = true;
     requestAnimationFrame(() => {
       ticking = false;
-      const list = document.querySelector(".dishes");
-      if (!list) return;
-      const r = list.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > innerHeight) return;
       const target = innerHeight * 0.5;
-      let best = 0, bestD = Infinity;
-      dishes.forEach((d, i) => {
-        const b = d.querySelector("button").getBoundingClientRect();
-        const dist = Math.abs(b.top + b.height / 2 - target);
-        if (dist < bestD) { bestD = dist; best = i; }
+      lists.forEach(({ dishes, list, activate }) => {
+        const r = list.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) return;
+        let best = 0, bestD = Infinity;
+        dishes.forEach((d, i) => {
+          const b = d.querySelector("button").getBoundingClientRect();
+          const dist = Math.abs(b.top + b.height / 2 - target);
+          if (dist < bestD) { bestD = dist; best = i; }
+        });
+        activate(best);
       });
-      activate(best);
     });
   };
-  addEventListener("scroll", onScroll, { passive: true });
+  if (lists.length) addEventListener("scroll", onScroll, { passive: true });
 
   // Open now? Worked out in Benin City time (West Africa Time, UTC+1)
   const OPEN = 8 * 60, CLOSE = 22 * 60;
@@ -199,7 +202,14 @@
       window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(compose())}`, "_blank", "noopener");
     });
 
-    // Buttons elsewhere ("Book a table", "Reserve the lounge"…) preselect the right option
+    // Links from other pages ("Reserve the lounge" → reserve.html?kind=Lounge) preselect the option
+    const fromUrl = new URLSearchParams(location.search).get("kind");
+    if (fromUrl) {
+      const r = form.querySelector(`input[name="kind"][value="${CSS.escape(fromUrl)}"]`);
+      if (r) r.checked = true;
+    }
+
+    // Buttons on the same page preselect the right option
     document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", () => {
       const r = form.querySelector(`input[name="kind"][value="${a.dataset.pick}"]`);
       if (r) { r.checked = true; render(); }

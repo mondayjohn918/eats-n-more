@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en-NG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Reserve and visit · Eats N More Restaurant &amp; Lounge, Benin City</title>
+  <meta name="description" content="Reserve a table, the lounge or a room on WhatsApp, or order a takeaway. Edo Street, Ekosodin, Benin City. Open daily 8am to 10pm.">
+  <meta name="theme-color" content="#0a100d">
+  <link rel="canonical" href="https://mondayjohn918.github.io/eats-n-more/reserve.html">
+
+  <meta property="og:type" content="restaurant.restaurant">
+  <meta property="og:site_name" content="Eats N More Restaurant &amp; Lounge">
+  <meta property="og:title" content="Reserve and visit · Eats N More Restaurant &amp; Lounge, Benin City">
+  <meta property="og:description" content="Reserve a table, the lounge or a room on WhatsApp, or order a takeaway. Edo Street, Ekosodin, Benin City. Open daily 8am to 10pm.">
+  <meta property="og:url" content="https://mondayjohn918.github.io/eats-n-more/reserve.html">
+  <meta property="og:image" content="https://mondayjohn918.github.io/eats-n-more/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The green neon Eats N More sign above the word Restaurant">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@eatsNmoreLounge">
+
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@100,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+
+</head>
+<body class="page-reserve">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="bar">
+    <a class="wordmark" href="./" aria-label="Eats N More, home">Eats N More</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="menu.html">Menu</a></li>
+        <li class="hide-sm"><a href="the-house.html">The house</a></li>
+        <li class="hide-sm"><a href="reserve.html#visit">Visit</a></li>
+        <li><a href="reserve.html" class="bar-reserve" aria-current="page">Reserve</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="reserve reserve--page" id="reserve" aria-labelledby="reserve-title">
+      <div class="r-intro">
+        <h1 id="reserve-title" class="mask"><span class="line"><span>Reserve</span></span><span class="line"><span>your evening</span></span></h1>
+        <p class="reveal">Book a table, the lounge or a room at Eats N More, or order a takeaway. Choose what you need: your message is written for you and opens in WhatsApp, ready to send.</p>
+        <p class="status status--lg reveal" data-status><span class="dot" aria-hidden="true"></span><span data-status-text>Open daily, 8am to 10pm</span></p>
+        <p class="r-call reveal">Prefer to talk? <a href="tel:+2348129415223">Call 0812 941 5223</a></p>
+        <div class="r-pics">
+          <figure class="reveal-pic"><img src="assets/img/own-neon.webp" alt="The green neon Eats N More sign" width="720" height="480" loading="lazy" decoding="async"></figure>
+          <figure class="reveal-pic"><img src="assets/img/own-interior.webp" alt="Marble tables and gold chairs in the dining room" width="360" height="480" loading="lazy" decoding="async"></figure>
+        </div>
+      </div>
+
+      <form class="r-form" id="r-form" action="https://wa.me/2348129415223" method="get" novalidate>
+        <fieldset class="r-kind">
+          <legend>I'd like</legend>
+          <div class="r-opts">
+            <label><input type="radio" name="kind" value="Table" checked><span>A table</span></label>
+            <label><input type="radio" name="kind" value="Lounge"><span>The lounge</span></label>
+            <label><input type="radio" name="kind" value="Room"><span>A room</span></label>
+            <label><input type="radio" name="kind" value="Takeaway"><span>Takeaway</span></label>
+          </div>
+        </fieldset>
+
+        <div class="r-row">
+          <label class="field"><span data-date-label>Date</span><input type="date" name="date" required></label>
+          <label class="field" data-time-wrap><span>Time</span><input type="time" name="time" value="19:00" min="08:00" max="22:00" step="900"></label>
+        </div>
+
+        <div class="r-row">
+          <div class="field" data-guests-wrap>
+            <span id="guests-label">Guests</span>
+            <div class="stepper" role="group" aria-labelledby="guests-label">
+              <button type="button" data-step="-1" aria-label="One fewer">−</button>
+              <output name="guests" data-guests aria-live="polite">2</output>
+              <button type="button" data-step="1" aria-label="One more">+</button>
+            </div>
+          </div>
+          <label class="field"><span>Your name</span><input type="text" name="name" autocomplete="name" placeholder="Name"></label>
+        </div>
+
+        <label class="field"><span>Anything we should know?</span><input type="text" name="note" placeholder="A birthday, a quiet corner, mild pepper soup…"></label>
+
+        <div class="slip" aria-live="polite">
+          <p class="slip-head">Your message</p>
+          <p class="slip-text" data-slip>Good evening, Eats N More. I'd like to reserve a table for 2.</p>
+        </div>
+
+        <div class="r-actions">
+          <button class="btn btn--wide" type="submit">Send on WhatsApp</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="visit-title">
+      <picture class="v-media">
+        <source media="(max-width: 760px)" srcset="assets/img/visit-mural-p.webp">
+        <img src="assets/img/visit-mural-l.webp" alt="The painted mural wall outside Eats N More" width="1080" height="675" loading="lazy" decoding="async">
+      </picture>
+      <div class="v-card reveal">
+        <h2 id="visit-title">Find us</h2>
+        <address>Edo Street, Ekosodin, a little after the town hall<br>Uselu, Benin City, Edo State</address>
+        <dl class="hours">
+          <div><dt>Restaurant</dt><dd>8am – 10pm</dd></div>
+          <div><dt>Lounge</dt><dd>8am – 10pm</dd></div>
+          <div><dt>Guesthouse</dt><dd>8am – 10pm</dd></div>
+        </dl>
+        <p class="v-phone"><a href="tel:+2348129415223">0812 941 5223</a></p>
+        <a class="btn btn--wide btn--dark" href="https://www.google.com/maps/search/?api=1&amp;query=EATS%20N%20MORE%20LOUNGE%2C%20CJ5F%2BWC%20Uselu%2C%20Benin%20City" target="_blank" rel="noopener">Get directions</a>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="faq-head">
+        <h2 id="faq-title" class="reveal">Before you come</h2>
+        <figure class="reveal-pic"><img src="assets/img/st-cocktails.webp" alt="Three cocktails on a dark table" width="820" height="1025" loading="lazy" decoding="async"></figure>
+      </div>
+      <div class="faq-list">
+        <details class="reveal">
+          <summary>Can I eat in, or only take away?</summary>
+          <p>Both. Sit down in the restaurant or the lounge, or order to take home.</p>
+        </details>
+        <details class="reveal">
+          <summary>Where exactly are you?</summary>
+          <p>On Edo Street in Ekosodin, a little after the town hall, near the University of Benin. Look for the painted mural wall and the green neon sign.</p>
+        </details>
+        <details class="reveal">
+          <summary>Is it good for children?</summary>
+          <p>Yes. Families eat with us, and there is ice cream for the end of the meal.</p>
+        </details>
+        <details class="reveal">
+          <summary>Is the pepper soup very spicy?</summary>
+          <p>It is cooked properly hot. Tell us when you order and we will make it milder.</p>
+        </details>
+        <details class="reveal">
+          <summary>Can I book the lounge for a party?</summary>
+          <p>Yes. Choose "The lounge" above, tell us the date and how many guests, and add a note about the occasion.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="f-cols">
+      <div>
+        <p class="f-first">Visit</p>
+        <p>Edo Street, Ekosodin</p>
+        <p>Benin City, Edo State</p>
+        <p>Daily, 8am to 10pm</p>
+      </div>
+      <div>
+        <p class="f-first">Explore</p>
+        <p><a href="menu.html">The menu</a></p>
+        <p><a href="the-house.html">The house</a></p>
+        <p><a href="reserve.html">Reserve</a></p>
+      </div>
+      <div>
+        <p class="f-first">Follow</p>
+        <p><a href="https://www.instagram.com/eatsnmore_restaurantand_lounge/" target="_blank" rel="noopener">Instagram</a></p>
+        <p><a href="https://x.com/eatsNmoreLounge" target="_blank" rel="noopener">X</a></p>
+      </div>
+      <div>
+        <p class="f-first">Talk to us</p>
+        <p><a href="tel:+2348129415223">0812 941 5223</a></p>
+        <p><a href="https://wa.me/2348129415223" target="_blank" rel="noopener">WhatsApp</a></p>
+      </div>
+    </div>
+    <div class="f-mark">
+      <img class="f-logo" src="assets/img/logo.webp" alt="Eats N More logo" width="240" height="240" loading="lazy">
+      <svg class="f-word" viewBox="0 0 1000 160" role="img" aria-label="Eats N More"><text x="0" y="136" textLength="1000" lengthAdjust="spacingAndGlyphs">Eats N More</text></svg>
+      <p class="f-legal">© <span data-year>2026</span> Eats N More Restaurant &amp; Lounge. Photographs by Eats N More, with atmosphere photography from Unsplash and Pexels.</p>
+    </div>
+  </footer>
+
+  <div class="dock" aria-label="Quick contact">
+    <a href="tel:+2348129415223">Call</a>
+    <a href="https://wa.me/2348129415223?text=Good%20day%2C%20Eats%20N%20More." target="_blank" rel="noopener" class="dock-wa">WhatsApp</a>
+  </div>
+
+  <script src="assets/main.js" defer></script>
+</body>
+</html>
