@@ -387,16 +387,18 @@ main { position: relative; z-index: 1; background: var(--bg); padding-bottom: va
   .bar { padding: 20px var(--m); }
   .hide-sm { display: none; }
 
-  .hero { min-height: max(100svh, 640px); }
-  .frame--wide { display: none; }
+  /* the same ring as on desktop, drawn as a tall ellipse that fits the phone screen */
+  .hero { min-height: max(100svh, 620px); padding-top: 6%; }
   .frame {
-    left: calc(50% + 66vw * var(--mc));
-    top: calc(50% + 66vw * var(--ms));
-    width: calc(var(--mw) * 1px);
-    transform: translate(-50%, -50%) rotate(calc(var(--r) * 0.6));
+    left: calc(50% + 47vw * var(--c));
+    top: calc(53% + 36.5% * var(--s));
+    width: calc(var(--w) * min(0.155vw, 0.082svh));
+    transform: translate(-50%, -50%) rotate(var(--r));
   }
-  .core { width: calc(100% - 56px); }
-  .hero h1 { font-size: 10.5vw; }
+  .core { width: min(66vw, 280px); }
+  .hero h1 { font-size: min(8.6vw, 2.4rem); }
+  .core-sub { margin-top: 18px; font-size: 1rem; line-height: 1.55; text-wrap: balance; }
+  .core-actions { margin-top: 20px; gap: 12px; }
   .core-actions { width: 100%; }
   .core-actions .btn { width: 100%; }
 
