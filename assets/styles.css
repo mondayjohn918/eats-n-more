@@ -573,3 +573,54 @@ main { position: relative; z-index: 1; background: var(--bg); padding-bottom: va
   .faq summary { padding: 16px 52px 16px 20px; font-size: 1.25rem; }
   .faq details p { padding: 0 20px 20px; }
 }
+
+/* ---------- phone page menu ---------- */
+.nav-toggle { display: none; }
+.sheet { display: none; }
+@media (max-width: 760px) {
+  .bar ul li:not(:last-child) { display: none; }
+  .bar nav { margin-left: auto; margin-right: 8px; }
+  .nav-toggle {
+    display: grid; align-content: center; gap: 7px; width: 48px; height: 48px; margin-right: -12px;
+    background: none; border: 0; cursor: pointer; position: relative; z-index: 61;
+  }
+  .nav-toggle span {
+    display: block; width: 24px; height: 1.5px; margin: 0 auto; background: var(--ink);
+    transition: transform 320ms var(--ease-out);
+  }
+  .nav-toggle[aria-expanded="true"] span:first-child { transform: translateY(4.25px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:last-child { transform: translateY(-4.25px) rotate(-45deg); }
+  .bar { z-index: 61; }
+  .menu-open .bar { position: fixed; }
+
+  .sheet {
+    position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; justify-content: space-between;
+    padding: 112px var(--m) calc(32px + env(safe-area-inset-bottom));
+    background: var(--bg);
+    opacity: 0; visibility: hidden;
+    transition: opacity 280ms var(--ease-out), visibility 0s linear 280ms;
+  }
+  .sheet[hidden] { display: flex; }
+  .sheet.is-open { opacity: 1; visibility: visible; transition: opacity 320ms var(--ease-out); }
+  .sheet-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .sheet-links a {
+    display: block; padding: 6px 0; text-decoration: none;
+    font: 300 clamp(2.5rem, 12vw, 3.25rem)/1.1 var(--display); letter-spacing: -0.01em;
+  }
+  .sheet-links a[aria-current="page"] { color: var(--accent); }
+  .sheet-links li { opacity: 0; transform: translateY(16px); }
+  .sheet.is-open .sheet-links li {
+    opacity: 1; transform: none;
+    transition: opacity 420ms var(--ease-out), transform 520ms var(--ease-out);
+    transition-delay: calc(var(--n) * 50ms + 60ms);
+  }
+  .sheet-links a:active { opacity: 0.6; }
+  .sheet-foot { color: var(--muted); display: grid; gap: 12px; }
+  .sheet-foot a { color: var(--ink); font: 300 var(--step-lead)/1 var(--display); text-decoration: none; }
+  .menu-open { overflow: hidden; }
+  .menu-open .dock { transform: translateY(110%); }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .sheet-links li { transform: none; }
+  .nav-toggle span { transition: none; }
+}

@@ -224,6 +224,36 @@
     new IntersectionObserver(([e]) => dock.classList.toggle("is-shown", !e.isIntersecting), { threshold: 0.15 }).observe(hero);
   }
 
+  // Phone page menu
+  const toggle = document.querySelector(".nav-toggle");
+  const sheet = document.getElementById("sheet");
+  if (toggle && sheet) {
+    const links = [...sheet.querySelectorAll("a")];
+    sheet.querySelectorAll(".sheet-links li").forEach((li, i) => li.style.setProperty("--n", i));
+    const here = location.pathname.split("/").pop() || "index.html";
+    links.forEach(a => {
+      const target = a.getAttribute("href").split("#")[0] || "index.html";
+      if ((target === "./" ? "index.html" : target) === here && !a.hash) a.setAttribute("aria-current", "page");
+    });
+    const setOpen = open => {
+      toggle.setAttribute("aria-expanded", open);
+      toggle.setAttribute("aria-label", open ? "Close the menu" : "Open the menu of pages");
+      document.body.classList.toggle("menu-open", open);
+      if (open) {
+        sheet.hidden = false;
+        requestAnimationFrame(() => sheet.classList.add("is-open"));
+        setTimeout(() => links[0].focus({ preventScroll: true }), 60);
+      } else {
+        sheet.classList.remove("is-open");
+        toggle.focus({ preventScroll: true });
+      }
+    };
+    toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+    links.forEach(a => a.addEventListener("click", () => setOpen(false)));
+    addEventListener("keydown", e => { if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") setOpen(false); });
+    phone.addEventListener("change", e => { if (!e.matches) setOpen(false); });
+  }
+
   const y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();
 })();
