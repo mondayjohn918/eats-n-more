@@ -22,6 +22,60 @@
     f.addEventListener("blur", hide);
   });
 
+  // Hero ring turns slowly: each photo glides along the oval, larger at the front, smaller at the back.
+  // Without script (or with reduced motion) the photos stay where the HTML places them.
+  const ring = document.querySelector(".ring");
+  if (ring && !reduce) {
+    const frames = [...ring.querySelectorAll(".frame")];
+    const hero = ring.closest(".hero");
+    const PERIOD = 90000;            // one full turn, in ms
+    let geo, last = 0, angle = 0, paused = false, onScreen = true, raf = 0;
+
+    const measure = () => {
+      const w = hero.clientWidth, h = hero.clientHeight;
+      const small = phone.matches;
+      const shown = small ? frames.slice(0, 14) : frames;
+      frames.forEach(f => { f.hidden = !shown.includes(f); });
+      geo = small
+        ? { cx: w / 2, cy: h * 0.53, rx: w * 0.47, ry: h * 0.375, unit: Math.min(w * 0.0013, innerHeight * 0.0007), shown }
+        : { cx: w / 2, cy: h / 2, rx: w * 0.39, ry: h * 0.35, unit: w * 0.000694, shown };
+      ring.classList.add("ring--live");
+    };
+
+    const place = () => {
+      const { cx, cy, rx, ry, unit, shown } = geo;
+      const n = shown.length;
+      shown.forEach((f, i) => {
+        const a = angle + (i / n) * Math.PI * 2 - Math.PI / 2;
+        const c = Math.cos(a), sn = Math.sin(a);
+        const size = (125 + 25 * sn) * unit;                       // px, nearer = larger
+        const tilt = -28 * c * (sn >= 0 ? 1 : -1) * Math.min(1, Math.abs(sn) * 1.6);
+        f.style.width = "150px";
+        f.style.transform = `translate3d(${cx + rx * c}px, ${cy + ry * sn}px, 0) translate(-50%, -50%) rotate(${tilt.toFixed(2)}deg) scale(${(size / 150).toFixed(4)})`;
+        f.style.zIndex = Math.round(sn * 10) + 10;
+      });
+    };
+
+    const tick = t => {
+      if (last) angle += ((t - last) / PERIOD) * Math.PI * 2;
+      last = t;
+      place();
+      raf = (paused || !onScreen || document.hidden) ? 0 : requestAnimationFrame(tick);
+    };
+    const run = () => { if (!raf && !paused && onScreen && !document.hidden) { last = 0; raf = requestAnimationFrame(tick); } };
+
+    measure(); place(); run();
+    addEventListener("resize", () => { measure(); place(); });
+    phone.addEventListener("change", () => { measure(); place(); });
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; run(); }).observe(hero);
+    document.addEventListener("visibilitychange", run);
+    // Hold still while someone points at a photo, so it can be read and clicked
+    ring.addEventListener("pointerover", e => { if (e.pointerType === "mouse" && e.target.closest(".frame")) paused = true; });
+    ring.addEventListener("pointerout", e => { if (e.pointerType === "mouse") { paused = false; run(); } });
+    ring.addEventListener("focusin", () => { paused = true; });
+    ring.addEventListener("focusout", () => { paused = false; run(); });
+  }
+
   // Section entrances: heading, then text, then picture
   document.querySelectorAll(".reveal-group").forEach(g => [...g.children].forEach((c, i) => c.style.setProperty("--d", i)));
   document.querySelectorAll("section").forEach(s => s.querySelectorAll(".reveal").forEach((el, i) => el.style.setProperty("--d", i)));
